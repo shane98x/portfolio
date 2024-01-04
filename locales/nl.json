@@ -1,7 +1,12 @@
 {
-    "overview": "Overzicht",
-    "favorites": "Favorieten",
-    "settings": "Instellingen",
-    "details": "Details"
-  }
-  
+  "overview": "Overzicht",
+  "favorites": "Favorieten",
+  "settings": "Instellingen",
+  "details": "Details",
+  "welcomeMessage": "Welkom! Begin met het zoeken naar een token.",
+  "noResults": "Geen resultaten gevonden. Probeer een andere zoekopdracht.",
+  "searchTokenName": "Zoek token naam",
+  "search": "Zoeken",
+  "apiOffline": "API is momenteel offline. Probeer het later opnieuw.",
+  "close": "Sluiten"
+}

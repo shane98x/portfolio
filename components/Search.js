@@ -13,13 +13,15 @@ import {
   Button
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ThemeContext } from '../config/themeContext'; // Import ThemeContext
+import { ThemeContext } from '../config/themeContext';
+import { useTranslation } from 'react-i18next';
 
 const { width } = Dimensions.get('window');
 
 const Search = () => {
     const navigation = useNavigation();
-    const { theme } = useContext(ThemeContext); // Access the theme from the context
+    const { theme } = useContext(ThemeContext);
+    const { t } = useTranslation();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [errorModalVisible, setErrorModalVisible] = useState(false);
@@ -29,14 +31,14 @@ const Search = () => {
 
     const handleSearch = async () => {
         setIsLoading(true);
-        setShowWelcome(false); 
-        setNoResults(false); 
+        setShowWelcome(false);
+        setNoResults(false);
         try {
             const response = await fetch(`https://api.coingecko.com/api/v3/search?query=${query}`);
             const data = await response.json();
             setResults(data.coins);
             if (data.coins.length === 0) {
-                setNoResults(true); 
+                setNoResults(true);
             }
         } catch (error) {
             console.error(error);
@@ -56,25 +58,24 @@ const Search = () => {
                 style={[styles.input, { backgroundColor: theme.inputBackground, color: theme.inputText, borderColor: theme.itemBorder }]}
                 value={query}
                 onChangeText={text => setQuery(text)}
-                placeholder="Search token name"
+                placeholder={t('searchTokenName')} 
                 placeholderTextColor={theme.inputText}
             />
-            {/* Custom Search Button */}
             <TouchableOpacity 
                 onPress={handleSearch}
-                style={[styles.searchButton, { backgroundColor: theme.tabBarActiveTint }]} // Use theme color for button background
+                style={[styles.searchButton, { backgroundColor: theme.tabBarActiveTint }]} 
             >
-                <Text style={styles.searchButtonText}>Search</Text>
+                <Text style={styles.searchButtonText}>{t('search')}</Text> 
             </TouchableOpacity>
 
             {showWelcome && (
-                <Text style={[styles.welcomeText, { color: theme.text }]}>Welcome! Start by searching for a token name.</Text>
+                <Text style={[styles.welcomeText, { color: theme.text }]}>{t('welcomeMessage')}</Text> 
             )}
 
             {isLoading ? (
                 <ActivityIndicator size="large" color={theme.activityIndicator} />
             ) : noResults ? (
-                <Text style={[styles.noResultsText, { color: theme.text }]}>No results found. Try a different search.</Text>
+                <Text style={[styles.noResultsText, { color: theme.text }]}>{t('noResults')}</Text> 
             ) : (
                 <FlatList
                     style={styles.list}
@@ -100,8 +101,8 @@ const Search = () => {
                 animationType="slide"
             >
                 <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
-                    <Text style={{ color: theme.text }}>API is currently offline. Please try again later.</Text>
-                    <Button title="Close" onPress={() => setErrorModalVisible(false)} color={theme.text} />
+                    <Text style={{ color: theme.text }}>{t('apiOffline')}</Text> 
+                    <Button title={t('close')} onPress={() => setErrorModalVisible(false)} color={theme.text} /> 
                 </View>
             </Modal>
         </View>

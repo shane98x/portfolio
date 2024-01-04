@@ -1,7 +1,12 @@
 {
-    "overview": "Overview",
-    "favorites": "Favorites",
-    "settings": "Settings",
-    "details": "Details"
-  }
-  
+  "overview": "Overview",
+  "favorites": "Favorites",
+  "settings": "Settings",
+  "details": "Details",
+  "welcomeMessage": "Welcome! Start by searching for a token name.",
+  "noResults": "No results found. Try a different search.",
+  "searchTokenName": "Search token name",
+  "search": "Search",
+  "apiOffline": "API is currently offline. Please try again later.",
+  "close": "Close"
+}
