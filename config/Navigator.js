@@ -51,6 +51,7 @@ function FavouritesStackScreen() {
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Favourites" component={FavoritesPage} options={{ title: t('favorites') }} />
       <Stack.Screen name="Details" component={DetailsPage} options={{ title: t('details') }} />
+      <Stack.Screen name="Chart" component={ChartPage} options={{ title: t('chart') }} />
     </Stack.Navigator>
   );
 }

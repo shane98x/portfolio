@@ -27,7 +27,9 @@
   "alreadyInFavorites": "Al in Favorieten",
   "removedFromFavorites": "Verwijderd uit Favorieten",
   "noInfo" : "Geen info",
-  "chart": "Grafiek"
+  "chart": "Grafiek",
+  "viewChart": "Zie grafiek",
+  "priceEvolution": "Prijs evolutie"
 }
 
 

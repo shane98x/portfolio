@@ -101,6 +101,10 @@ const TokenDetails = ({ id }) => {
             console.error(error);
         }
     };
+
+    const navigateToChart = () => {
+        navigation.navigate('Chart', { id: id });
+    };
     
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
@@ -113,6 +117,9 @@ const TokenDetails = ({ id }) => {
             <Text style={[styles.atl, { color: theme.text }]}>{`${t('allTimeLow')}: €${formatValue(token.market_data.atl.eur, true)}`}</Text>
             <Text style={[styles.atlPercentage, { color: theme.text }]}>{`${t('changeFromATL')}: ${formatValue(token.market_data.atl_change_percentage.eur, true)}%`}</Text>
             
+            <TouchableOpacity onPress={navigateToChart} style={[styles.chartButton, { backgroundColor: theme.tabBarActiveTint }]}>
+                <Text style={styles.chartButtonText}>{t('viewChart')}</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={addToFavorites} style={[styles.favoritesButton, { backgroundColor: theme.tabBarActiveTint }]}>
                 <Text style={styles.favoritesButtonText}>{t('addToFavorites')}</Text>
             </TouchableOpacity>
@@ -174,6 +181,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    chartButton: {
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+    },
+    chartButtonText: {
+        color: 'white',
+        textAlign: 'center',
+    }
 });
 
 export default TokenDetails;

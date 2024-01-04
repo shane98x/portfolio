@@ -27,7 +27,9 @@
   "alreadyInFavorites": "Already in Favorites",
   "removedFromFavorites": "Removed from Favorites",
   "noInfo" : "No info",
-  "chart": "Chart"
+  "chart": "Chart",
+  "viewChart": "View Chart",
+  "priceEvolution": "Price evolution"
 }
 
 
