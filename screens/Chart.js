@@ -38,7 +38,7 @@ const ChartPage = ({ route }) => {
         try {
             const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
             const data = await response.json();
-            if (response.ok && data.prices) {
+            if (response.ok && data.prices && data.prices.length > 0) {
                 setChartData({
                     labels: data.prices.map((price) => moment(price[0]).format('LT')),
                     datasets: [{
@@ -48,8 +48,7 @@ const ChartPage = ({ route }) => {
                     }],
                 });
             } else {
-                setErrorMessage(t('apiOffline'));
-                setErrorModalVisible(true);
+                throw new Error(t('apiOffline'));
             }
         } catch (error) {
             setErrorMessage(t('apiOffline'));
@@ -60,7 +59,7 @@ const ChartPage = ({ route }) => {
     };
 
     useEffect(() => {
-        fetchChartData(timeRange); 
+        fetchChartData(timeRange);
     }, [id, timeRange]);
 
     const screenWidth = Dimensions.get("window").width;
@@ -95,7 +94,7 @@ const ChartPage = ({ route }) => {
                 </View>
                 {isLoading ? (
                     <ActivityIndicator size="large" color={theme.activityIndicator} />
-                ) : (
+                ) : chartData ? (
                     <LineChart
                         data={chartData}
                         width={screenWidth}
@@ -129,6 +128,8 @@ const ChartPage = ({ route }) => {
                         withVerticalLabels={false}
                         fromZero={false}
                     />
+                ) : (
+                    <Text style={{ color: theme.text }}>{t('noChartData')}</Text>
                 )}
             </ScrollView>
         </View>
