@@ -8,5 +8,12 @@
   "searchTokenName": "Zoek token naam",
   "search": "Zoeken",
   "apiOffline": "API is momenteel offline. Probeer het later opnieuw.",
-  "close": "Sluiten"
+  "close": "Sluiten",
+  "currentPrice": "Huidige prijs (EUR)",
+  "marketCapRank": "Marktkapitalisatie Rank",
+  "allTimeHigh": "Recordhoogte (EUR)",
+  "changeFromATH": "% verandering van Recordhoogte",
+  "allTimeLow": "Recordlaagte (EUR)",
+  "changeFromATL": "% verandering van Recordlaagte",
+  "addToFavorites": "Toevoegen aan favorieten"
 }

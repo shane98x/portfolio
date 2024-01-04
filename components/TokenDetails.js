@@ -1,4 +1,3 @@
-// TokenDetails.js
 import React, { useEffect, useState, useContext } from 'react';
 import {
   ScrollView,
@@ -6,15 +5,17 @@ import {
   Image,
   ActivityIndicator,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import FavoritesContext from '../config/favoritesContext';
-import { ThemeContext } from '../config/themeContext'; 
+import { ThemeContext } from '../config/themeContext';
+import { useTranslation } from 'react-i18next';
 
 const TokenDetails = ({ id }) => {
-    const { theme } = useContext(ThemeContext); // Access the theme from the context
+    const { theme } = useContext(ThemeContext);
     const { addFavorite } = useContext(FavoritesContext);
-    const [token, setToken] = useState(null); 
+    const { t } = useTranslation();
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -38,7 +39,7 @@ const TokenDetails = ({ id }) => {
 
     const formatValue = (value, isNumeric = false) => {
         if (value === null || value === undefined) {
-            return isNumeric ? '0.00000' : 'No info';
+            return isNumeric ? '0.00000' : t('noInfo');
         }
         return isNumeric ? value.toFixed(5) : value;
     };
@@ -54,17 +55,17 @@ const TokenDetails = ({ id }) => {
     
     return (
         <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
-            <Text style={[styles.name, { color: theme.text }]}>{token.name ? `${token.name} (${token.symbol.toUpperCase()})` : 'No info'}</Text>
+            <Text style={[styles.name, { color: theme.text }]}>{token.name ? `${token.name} (${token.symbol.toUpperCase()})` : t('noInfo')}</Text>
             <Image source={token.image && token.image.large ? { uri: token.image.large } : require('../assets/not_found.png')} style={styles.image} />
-            <Text style={[styles.currentPrice, { color: theme.text }]}>Current Price: €{formatValue(token.market_data.current_price.eur, true)}</Text>
-            <Text style={[styles.marketCapRank, { color: theme.text }]}>Market Cap Rank: {formatValue(token.market_data.market_cap_rank)}</Text>
-            <Text style={[styles.ath, { color: theme.text }]}>All-Time High (EUR): €{formatValue(token.market_data.ath.eur, true)}</Text>
-            <Text style={[styles.athPercentage, { color: theme.text }]}>% change from ATH: {formatValue(token.market_data.ath_change_percentage.eur, true)}%</Text>
-            <Text style={[styles.atl, { color: theme.text }]}>All-Time Low (EUR): €{formatValue(token.market_data.atl.eur, true)}</Text>
-            <Text style={[styles.atlPercentage, { color: theme.text }]}>% change from ATL: {formatValue(token.market_data.atl_change_percentage.eur, true)}%</Text>
+            <Text style={[styles.currentPrice, { color: theme.text }]}>{`${t('currentPrice')}: €${formatValue(token.market_data.current_price.eur, true)}`}</Text>
+            <Text style={[styles.marketCapRank, { color: theme.text }]}>{`${t('marketCapRank')}: ${formatValue(token.market_data.market_cap_rank)}`}</Text>
+            <Text style={[styles.ath, { color: theme.text }]}>{`${t('allTimeHigh')}: €${formatValue(token.market_data.ath.eur, true)}`}</Text>
+            <Text style={[styles.athPercentage, { color: theme.text }]}>{`${t('changeFromATH')}: ${formatValue(token.market_data.ath_change_percentage.eur, true)}%`}</Text>
+            <Text style={[styles.atl, { color: theme.text }]}>{`${t('allTimeLow')}: €${formatValue(token.market_data.atl.eur, true)}`}</Text>
+            <Text style={[styles.atlPercentage, { color: theme.text }]}>{`${t('changeFromATL')}: ${formatValue(token.market_data.atl_change_percentage.eur, true)}%`}</Text>
             
             <TouchableOpacity onPress={addToFavorites} style={[styles.favoritesButton, { backgroundColor: theme.tabBarActiveTint }]}>
-                <Text style={styles.favoritesButtonText}>Add to Favorites</Text>
+                <Text style={styles.favoritesButtonText}>{t('addToFavorites')}</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -113,16 +114,17 @@ const styles = StyleSheet.create({
     favoritesButton: {
         padding: 10,
         borderRadius: 5,
+        marginTop: 10,
     },
     favoritesButtonText: {
-        color: 'white', 
+        color: 'white',
         textAlign: 'center',
     },
     loader: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
+    }
 });
 
 export default TokenDetails;

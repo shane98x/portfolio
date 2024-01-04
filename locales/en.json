@@ -8,5 +8,12 @@
   "searchTokenName": "Search token name",
   "search": "Search",
   "apiOffline": "API is currently offline. Please try again later.",
-  "close": "Close"
+  "close": "Close",
+  "currentPrice": "Current Price",
+  "marketCapRank": "Market Cap Rank",
+  "allTimeHigh": "All-Time High (EUR)",
+  "changeFromATH": "% change from ATH",
+  "allTimeLow": "All-Time Low (EUR)",
+  "changeFromATL": "% change from ATL",
+  "addToFavorites": "Add to Favorites"
 }
