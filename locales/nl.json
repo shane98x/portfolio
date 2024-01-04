@@ -36,7 +36,9 @@
   "high": "Hoog",
   "low": "Laag",
   "last24hfilter": "Filter: laatste 24 uur",
-  "last7dfilter": "Filter: laatste 7 dagen"
+  "last7dfilter": "Filter: laatste 7 dagen",
+  "dark": "Donker",
+  "light": "Licht"
 }
 
 
