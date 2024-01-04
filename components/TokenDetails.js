@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Modal,
   View,
-  Button,
 } from 'react-native';
 import FavoritesContext from '../config/favoritesContext';
 import { ThemeContext } from '../config/themeContext';
