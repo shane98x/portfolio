@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import {
   View,
   TextInput,
-  Button,
   Text,
   FlatList,
   Modal,
@@ -11,6 +10,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  Button
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../config/themeContext'; // Import ThemeContext
@@ -59,7 +59,13 @@ const Search = () => {
                 placeholder="Search token name"
                 placeholderTextColor={theme.inputText}
             />
-            <Button title="Search" onPress={handleSearch} color={theme.text} />
+            {/* Custom Search Button */}
+            <TouchableOpacity 
+                onPress={handleSearch}
+                style={[styles.searchButton, { backgroundColor: theme.tabBarActiveTint }]} // Use theme color for button background
+            >
+                <Text style={styles.searchButtonText}>Search</Text>
+            </TouchableOpacity>
 
             {showWelcome && (
                 <Text style={[styles.welcomeText, { color: theme.text }]}>Welcome! Start by searching for a token name.</Text>
@@ -106,15 +112,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        backgroundColor: '#fff',
     },
     input: {
         height: 40,
-        borderColor: 'gray',
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
-        width: width - 20, 
+        width: width - 20,
     },
     list: {
         flexGrow: 1,
@@ -124,7 +128,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
         width: width - 20,
     },
     itemImage: {
@@ -140,7 +143,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
     },
     welcomeText: {
         fontSize: 18,
@@ -151,6 +153,18 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 20,
+    },
+    searchButton: {
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10,
+        borderRadius: 20,
+        padding: 10,
+    },
+    searchButtonText: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
     },
 });
 

@@ -46,6 +46,8 @@ function FavouritesStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
+  const { theme } = useContext(ThemeContext); // Access the theme from the context
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -62,8 +64,8 @@ function TabNavigator() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'blue',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: theme.tabBarActiveTint, 
+        tabBarInactiveTintColor: theme.tabBarInactiveTint, 
         headerShown: false,
       })}
     >
