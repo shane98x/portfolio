@@ -13,6 +13,8 @@ import DetailsPage from '../screens/Details';
 import { ThemeContext } from '../config/themeContext';
 import { darkTheme } from '../themes/dark';
 
+import { useTranslation } from 'react-i18next';
+
 // Create Stack Navigator for each tab
 const Stack = createStackNavigator();
 
@@ -46,7 +48,8 @@ function FavouritesStackScreen() {
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
-  const { theme } = useContext(ThemeContext); // Access the theme from the context
+  const { theme } = useContext(ThemeContext); 
+  const { t } = useTranslation(); 
 
   return (
     <Tab.Navigator
@@ -64,8 +67,9 @@ function TabNavigator() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: theme.tabBarActiveTint, 
-        tabBarInactiveTintColor: theme.tabBarInactiveTint, 
+        tabBarLabel: t(route.name.toLowerCase()), 
+        tabBarActiveTintColor: theme.tabBarActiveTint,
+        tabBarInactiveTintColor: theme.tabBarInactiveTint,
         headerShown: false,
       })}
     >
@@ -77,7 +81,7 @@ function TabNavigator() {
 }
 
 const AppNavigator = () => {
-  const { theme } = useContext(ThemeContext); // Access the theme from the context
+  const { theme } = useContext(ThemeContext); 
 
   return (
     <NavigationContainer theme={{

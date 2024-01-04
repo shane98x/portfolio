@@ -1,9 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, Switch, Image, StyleSheet } from 'react-native';
 import { ThemeContext } from '../config/themeContext'; 
+import i18n from '../config/i18n';
 
 const SettingsPage = () => {
   const { theme, toggleTheme, isDark } = useContext(ThemeContext); 
+  const [language, setLanguage] = useState(i18n.language);
+
+  // Define consistent styling for switches
+  const trackColors = { false: "#767577", true: theme.tabBarActiveTint };
+  const thumbColor = isDark ? "#f5dd4b" : "#f4f3f4";
+
+  const toggleLanguage = () => {
+    let newLanguage = language === 'en' ? 'nl' : 'en';
+    i18n.changeLanguage(newLanguage);
+    setLanguage(newLanguage);
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -17,16 +29,29 @@ const SettingsPage = () => {
       {/* App Settings Section */}
       <View style={styles.settingsSection}>
         <Text style={[styles.sectionTitle, { color: theme.text }]}>Device</Text>
-        <View style={[styles.themeToggleRow, { borderBottomColor: theme.itemBorder }]}>
+
+        {/* Theme Toggle */}
+        <View style={[styles.toggleRow, { borderBottomColor: theme.itemBorder }]}>
           <Text style={{ color: theme.text }}>{`Theme ( ${isDark ? 'Dark' : 'Light'} )`}</Text> 
-          {/* Toggle Switch */}
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isDark ? "#f5dd4b" : "#f4f3f4"}
+            trackColor={trackColors}
+            thumbColor={thumbColor}
             onValueChange={toggleTheme}
             value={isDark}
           />
         </View>
+
+        {/* Language Toggle */}
+        <View style={[styles.toggleRow, { borderBottomColor: theme.itemBorder }]}>
+          <Text style={{ color: theme.text }}>{`Language ( ${language === 'en' ? 'EN' : 'NL'} )`}</Text> 
+          <Switch
+            trackColor={trackColors}
+            thumbColor={thumbColor} // Consistent thumb color with the theme toggle
+            onValueChange={toggleLanguage}
+            value={language === 'nl'}
+          />
+        </View>
+
       </View>
     </View>
   );
@@ -63,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
   },
-  themeToggleRow: {
+  toggleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
