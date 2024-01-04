@@ -41,7 +41,7 @@ const ChartPage = ({ route }) => {
         const fromUnix = calculateUnixTime(daysBack);
 
         try {
-            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chdart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
+            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
             const data = await response.json();
             if (response.ok && data.prices && data.prices.length > 0) {
                 setChartData({

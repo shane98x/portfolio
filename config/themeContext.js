@@ -4,12 +4,12 @@ import { darkTheme } from '../themes/dark';
 
 export const ThemeContext = createContext({
   isDark: false,
-  theme: lightTheme, // Default to light theme
+  theme: lightTheme, 
   toggleTheme: () => {},
 });
 
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false); // Keep track of the current theme
+  const [isDark, setIsDark] = useState(false); 
 
   const toggleTheme = () => {
     setIsDark(!isDark);
