@@ -5,7 +5,10 @@ import {
   Image,
   ActivityIndicator,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal,
+  View,
+  Button,
 } from 'react-native';
 import FavoritesContext from '../config/favoritesContext';
 import { ThemeContext } from '../config/themeContext';
@@ -16,25 +19,45 @@ const TokenDetails = ({ id }) => {
     const { addFavorite } = useContext(FavoritesContext);
     const { t } = useTranslation();
     const [token, setToken] = useState(null);
+    const [errorModalVisible, setErrorModalVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false`);
+                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}s?localization=false`);
                 const data = await response.json();
-                setToken(data);
+                if (response.ok) {
+                    setToken(data);
+                } else {
+                    throw new Error('Network error. Try again.'); 
+                }
             } catch (error) {
-                console.error(error);
+                setErrorMessage(t('apiOffline')); 
+                setErrorModalVisible(true);
             }
         };
-
+    
         if (id) {
             fetchToken();
         }
     }, [id]);
+    
 
     if (!token) {
-        return <ActivityIndicator size="large" color={theme.activityIndicator} style={styles.loader} />;
+        return (
+            <Modal
+                visible={errorModalVisible}
+                transparent={true}
+                animationType="slide"
+                onRequestClose={() => setErrorModalVisible(false)}
+            >
+                <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
+                    <Text style={{ color: theme.text }}>{errorMessage}</Text>
+                    <Button title={t('close')} onPress={() => setErrorModalVisible(false)} color={theme.text} />
+                </View>
+            </Modal>
+        );
     }
 
     const formatValue = (value, isNumeric = false) => {
@@ -120,11 +143,11 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
     },
-    loader: {
+    modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 });
 
 export default TokenDetails;
