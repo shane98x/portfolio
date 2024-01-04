@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   TextInput,
@@ -13,11 +13,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from '../config/themeContext'; // Import ThemeContext
 
 const { width } = Dimensions.get('window');
 
 const Search = () => {
     const navigation = useNavigation();
+    const { theme } = useContext(ThemeContext); // Access the theme from the context
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [errorModalVisible, setErrorModalVisible] = useState(false);
@@ -49,23 +51,24 @@ const Search = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: theme.inputBackground, color: theme.inputText, borderColor: theme.itemBorder }]}
                 value={query}
                 onChangeText={text => setQuery(text)}
                 placeholder="Search token name"
+                placeholderTextColor={theme.inputText}
             />
-            <Button title="Search" onPress={handleSearch} />
+            <Button title="Search" onPress={handleSearch} color={theme.text} />
 
             {showWelcome && (
-                <Text style={styles.welcomeText}>Welcome! Start by searching for a token name.</Text>
+                <Text style={[styles.welcomeText, { color: theme.text }]}>Welcome! Start by searching for a token name.</Text>
             )}
 
             {isLoading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color={theme.activityIndicator} />
             ) : noResults ? (
-                <Text style={styles.noResultsText}>No results found. Try a different search.</Text>
+                <Text style={[styles.noResultsText, { color: theme.text }]}>No results found. Try a different search.</Text>
             ) : (
                 <FlatList
                     style={styles.list}
@@ -73,11 +76,11 @@ const Search = () => {
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => handleItemPress(item.id)}>
-                            <View style={styles.itemContainer}>
+                            <View style={[styles.itemContainer, { borderBottomColor: theme.itemBorder }]}>
                                 <Image source={{ uri: item.thumb }} style={styles.itemImage} />
                                 <View>
-                                    <Text style={styles.itemName}>{`${item.name} (${item.symbol.toUpperCase()})`}</Text>
-                                    <Text>Market Cap Rank: {item.market_cap_rank}</Text>
+                                    <Text style={[styles.itemName, { color: theme.text }]}>{`${item.name} (${item.symbol.toUpperCase()})`}</Text>
+                                    <Text style={{ color: theme.text }}>Market Cap Rank: {item.market_cap_rank}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -90,9 +93,9 @@ const Search = () => {
                 onRequestClose={() => setErrorModalVisible(false)}
                 animationType="slide"
             >
-                <View style={styles.modalContainer}>
-                    <Text>API is currently offline. Please try again later.</Text>
-                    <Button title="Close" onPress={() => setErrorModalVisible(false)} />
+                <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
+                    <Text style={{ color: theme.text }}>API is currently offline. Please try again later.</Text>
+                    <Button title="Close" onPress={() => setErrorModalVisible(false)} color={theme.text} />
                 </View>
             </Modal>
         </View>

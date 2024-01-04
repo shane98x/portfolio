@@ -1,10 +1,20 @@
+// TokenDetails.js
 import React, { useEffect, useState, useContext } from 'react';
-import { ScrollView, Text, Image, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import FavoritesContext from '../config/favoritesContext';
+import { ThemeContext } from '../config/themeContext'; 
 
 const TokenDetails = ({ id }) => {
-    const [token, setToken] = useState(null);
+    const { theme } = useContext(ThemeContext); // Access the theme from the context
     const { addFavorite } = useContext(FavoritesContext);
+    const [token, setToken] = useState(null); 
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -23,7 +33,7 @@ const TokenDetails = ({ id }) => {
     }, [id]);
 
     if (!token) {
-        return <ActivityIndicator size="large" style={styles.loader} />;
+        return <ActivityIndicator size="large" color={theme.activityIndicator} style={styles.loader} />;
     }
 
     const formatValue = (value, isNumeric = false) => {
@@ -35,7 +45,6 @@ const TokenDetails = ({ id }) => {
 
     const addToFavorites = async () => {
         try {
-            // Assuming the token object has an id, name, and symbol
             const tokenToSave = { id: token.id, name: token.name, symbol: token.symbol };
             addFavorite(tokenToSave); // Use addFavorite from context
         } catch (error) {
@@ -44,17 +53,17 @@ const TokenDetails = ({ id }) => {
     };
     
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.name}>{token.name ? `${token.name} (${token.symbol.toUpperCase()})` : 'No info'}</Text>
+        <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
+            <Text style={[styles.name, { color: theme.text }]}>{token.name ? `${token.name} (${token.symbol.toUpperCase()})` : 'No info'}</Text>
             <Image source={token.image && token.image.large ? { uri: token.image.large } : require('../assets/not_found.png')} style={styles.image} />
-            <Text style={styles.currentPrice}>Current Price: €{formatValue(token.market_data.current_price.eur, true)}</Text>
-            <Text style={styles.marketCapRank}>Market Cap Rank: {formatValue(token.market_data.market_cap_rank)}</Text>
-            <Text style={styles.ath}>All-Time High (EUR): €{formatValue(token.market_data.ath.eur, true)}</Text>
-            <Text style={styles.athPercentage}>% change from ATH: {formatValue(token.market_data.ath_change_percentage.eur, true)}%</Text>
-            <Text style={styles.atl}>All-Time Low (EUR): €{formatValue(token.market_data.atl.eur, true)}</Text>
-            <Text style={styles.atlPercentage}>% change from ATL: {formatValue(token.market_data.atl_change_percentage.eur, true)}%</Text>
+            <Text style={[styles.currentPrice, { color: theme.text }]}>Current Price: €{formatValue(token.market_data.current_price.eur, true)}</Text>
+            <Text style={[styles.marketCapRank, { color: theme.text }]}>Market Cap Rank: {formatValue(token.market_data.market_cap_rank)}</Text>
+            <Text style={[styles.ath, { color: theme.text }]}>All-Time High (EUR): €{formatValue(token.market_data.ath.eur, true)}</Text>
+            <Text style={[styles.athPercentage, { color: theme.text }]}>% change from ATH: {formatValue(token.market_data.ath_change_percentage.eur, true)}%</Text>
+            <Text style={[styles.atl, { color: theme.text }]}>All-Time Low (EUR): €{formatValue(token.market_data.atl.eur, true)}</Text>
+            <Text style={[styles.atlPercentage, { color: theme.text }]}>% change from ATL: {formatValue(token.market_data.atl_change_percentage.eur, true)}%</Text>
             
-            <TouchableOpacity onPress={addToFavorites} style={styles.favoritesButton}>
+            <TouchableOpacity onPress={addToFavorites} style={[styles.favoritesButton, { backgroundColor: theme.tabBarActiveTint }]}>
                 <Text style={styles.favoritesButtonText}>Add to Favorites</Text>
             </TouchableOpacity>
         </ScrollView>
@@ -65,7 +74,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#f5f5f5',
     },
     image: {
         width: 150,
@@ -80,48 +88,41 @@ const styles = StyleSheet.create({
     },
     currentPrice: {
         fontSize: 18,
-        color: '#4caf50',
         margin: 5,
     },
     marketCapRank: {
         fontSize: 16,
-        color: '#757575',
         margin: 5,
     },
     ath: {
         fontSize: 16,
-        color: '#757575',
         margin: 5,
     },
     athPercentage: {
         fontSize: 16,
-        color: '#757575',
         margin: 5,
     },
     atl: {
         fontSize: 16,
-        color: '#757575',
         margin: 5,
     },
     atlPercentage: {
         fontSize: 16,
-        color: '#757575',
         margin: 5,
     },
     favoritesButton: {
         padding: 10,
-        backgroundColor: 'blue',
         borderRadius: 5,
     },
     favoritesButtonText: {
-        color: 'white',
+        color: 'white', 
         textAlign: 'center',
     },
     loader: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
 });
 
 export default TokenDetails;

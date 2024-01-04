@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Search from '../components/Search'; 
+import { ThemeContext } from '../config/themeContext';
 
 const OverviewPage = () => {
+  const { theme } = useContext(ThemeContext); // Access the theme from the context
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Search /> 
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,6 +11,7 @@ import SettingsPage from '../screens/Settings';
 import DetailsPage from '../screens/Details';
 
 import { ThemeContext } from '../config/themeContext';
+import { darkTheme } from '../themes/dark';
 
 // Create Stack Navigator for each tab
 const Stack = createStackNavigator();
@@ -78,7 +79,7 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer theme={{
-      dark: theme.background === '#333333',
+      dark: theme.background === darkTheme.background,
       colors: {
         primary: theme.tabBarActiveTint,
         background: theme.background,
