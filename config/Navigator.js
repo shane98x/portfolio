@@ -1,15 +1,19 @@
 import React, {useContext} from 'react';
+
+// Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 
-// Import your page components here
+// Screens
 import OverviewPage from '../screens/Overview';
 import FavoritesPage from '../screens/Favorites';
 import SettingsPage from '../screens/Settings';
 import DetailsPage from '../screens/Details';
+import ChartPage from '../screens/Chart';
 
+// Theme
 import { ThemeContext } from '../config/themeContext';
 import { darkTheme } from '../themes/dark';
 
@@ -25,6 +29,7 @@ function OverviewStackScreen() {
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Overview" component={OverviewPage} options={{ title: t('overview') }} />
       <Stack.Screen name="Details" component={DetailsPage} options={{ title: t('details') }} />
+      <Stack.Screen name="Chart" component={ChartPage} options={{ title: t('chart') }} />
     </Stack.Navigator>
   );
 }

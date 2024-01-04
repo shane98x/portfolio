@@ -94,16 +94,24 @@ const Search = () => {
                 />
             )}
 
-            <Modal
-                visible={errorModalVisible}
-                onRequestClose={() => setErrorModalVisible(false)}
-                animationType="slide"
+<Modal
+        visible={errorModalVisible}
+        onRequestClose={() => setErrorModalVisible(false)}
+        animationType="slide"
+    >
+        <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
+            <Text style={{ color: theme.text }}>{t('apiOffline')}</Text> 
+            <TouchableOpacity 
+                onPress={() => {
+                    setErrorModalVisible(false);
+                    navigation.navigate('Overview'); // Navigate to Overview on press
+                }}
+                style={[styles.searchButton, { backgroundColor: theme.tabBarActiveTint }]} // Match the style with search button
             >
-                <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
-                    <Text style={{ color: theme.text }}>{t('apiOffline')}</Text> 
-                    <Button title={t('close')} onPress={() => setErrorModalVisible(false)} color={theme.text} /> 
-                </View>
-            </Modal>
+                <Text style={styles.searchButtonText}>{t('close')}</Text>
+            </TouchableOpacity>
+        </View>
+    </Modal>
         </View>
     );
 };

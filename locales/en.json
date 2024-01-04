@@ -25,7 +25,9 @@
   "anonymous": "Anonymous",
   "addedToFavorites": "Added to Favorites",
   "alreadyInFavorites": "Already in Favorites",
-  "removedFromFavorites": "Removed from Favorites"
+  "removedFromFavorites": "Removed from Favorites",
+  "noInfo" : "No info",
+  "chart": "Chart"
 }
 
 

@@ -13,50 +13,76 @@ import {
 import FavoritesContext from '../config/favoritesContext';
 import { ThemeContext } from '../config/themeContext';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 const TokenDetails = ({ id }) => {
     const { theme } = useContext(ThemeContext);
     const { addFavorite } = useContext(FavoritesContext);
     const { t } = useTranslation();
     const [token, setToken] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [errorModalVisible, setErrorModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchToken = async () => {
+            setIsLoading(true);
             try {
                 const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false`);
                 const data = await response.json();
                 if (response.ok) {
                     setToken(data);
                 } else {
-                    throw new Error('Network error. Try again.'); 
+                    throw new Error(t('apiOffline')); 
                 }
             } catch (error) {
                 setErrorMessage(t('apiOffline')); 
                 setErrorModalVisible(true);
+            } finally {
+                setIsLoading(false);
             }
         };
     
-        if (id) {
-            fetchToken();
-        }
-    }, [id]);
-    
+        fetchToken();
+    }, [id, t]);
 
-    if (!token) {
+    if (isLoading) {
+        return <ActivityIndicator size="large" color={theme.activityIndicator} />;
+    }
+
+    if (errorModalVisible) {
         return (
             <Modal
                 visible={errorModalVisible}
                 transparent={true}
                 animationType="slide"
-                onRequestClose={() => setErrorModalVisible(false)}
+                onRequestClose={() => {
+                    setErrorModalVisible(false);
+                    navigation.navigate('Favourites'); 
+                }}
             >
                 <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
                     <Text style={{ color: theme.text }}>{errorMessage}</Text>
-                    <Button title={t('close')} onPress={() => setErrorModalVisible(false)} color={theme.text} />
+                    <TouchableOpacity
+                        onPress={() => {
+                            setErrorModalVisible(false);
+                            navigation.navigate('Favourites'); 
+                        }}
+                        style={[styles.favoritesButton, { backgroundColor: theme.tabBarActiveTint }]} // Use the favoritesButton styling
+                    >
+                        <Text style={styles.favoritesButtonText}>{t('close')}</Text>
+                    </TouchableOpacity>
                 </View>
             </Modal>
+        );
+    }
+
+    if (!token) {
+        return (
+            <View style={[styles.container, { backgroundColor: theme.background }]}>
+                <Text style={{ color: theme.text }}>{t('noResults')}</Text>
+            </View>
         );
     }
 

@@ -12,9 +12,9 @@
   "currentPrice": "Huidige prijs (EUR)",
   "marketCapRank": "Marktkapitalisatie Rank",
   "allTimeHigh": "Recordhoogte (EUR)",
-  "changeFromATH": "% verandering van Recordhoogte",
+  "changeFromATH": "% t.o.v recordhoogte",
   "allTimeLow": "Recordlaagte (EUR)",
-  "changeFromATL": "% verandering van Recordlaagte",
+  "changeFromATL": "% t.o.v recordlaagte",
   "addToFavorites": "Toevoegen aan favorieten",
   "removeFavorite": "Verwijder uit Favorieten",
   "favoriteListTitle": "Uw Favoriete Tokens",
@@ -25,7 +25,9 @@
   "anonymous": "Anoniem",
   "addedToFavorites": "Toegevoegd aan Favorieten",
   "alreadyInFavorites": "Al in Favorieten",
-  "removedFromFavorites": "Verwijderd uit Favorieten"
+  "removedFromFavorites": "Verwijderd uit Favorieten",
+  "noInfo" : "Geen info",
+  "chart": "Grafiek"
 }
 
 

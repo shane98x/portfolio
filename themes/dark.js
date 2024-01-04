@@ -7,5 +7,5 @@ export const darkTheme = {
   inputText: '#DDD',
   itemBorder: '#555',
   modalBackground: '#444',
-  activityIndicator: "#0000ff",
+  activityIndicator: "#4FD3C4",
 };
