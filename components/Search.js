@@ -41,7 +41,6 @@ const Search = () => {
                 setNoResults(true);
             }
         } catch (error) {
-            console.error(error);
             setErrorModalVisible(true);
         } finally {
             setIsLoading(false);
