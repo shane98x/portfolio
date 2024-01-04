@@ -25,7 +25,7 @@ const TokenDetails = ({ id }) => {
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}s?localization=false`);
+                const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false`);
                 const data = await response.json();
                 if (response.ok) {
                     setToken(data);
