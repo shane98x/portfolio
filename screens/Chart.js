@@ -19,8 +19,8 @@ const ChartPage = ({ route }) => {
     const { id } = route.params;
     const [chartData, setChartData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [timeRange, setTimeRange] = useState(1);
-    const [lowHigh, setLowHigh] = useState({ low: 0, high: 0 }); // state to store low and high prices
+    const [timeRange, setTimeRange] = useState(1); // 1 for last 24h, 7 for last 7d
+    const [lowHigh, setLowHigh] = useState({ low: 0, high: 0 });
     const [errorModalVisible, setErrorModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { theme } = useContext(ThemeContext);
@@ -52,7 +52,6 @@ const ChartPage = ({ route }) => {
                     }],
                 });
 
-                // Calculate and Set Low and High Prices
                 setLowHigh({
                     low: Math.min(...prices),
                     high: Math.max(...prices),
@@ -88,7 +87,7 @@ const ChartPage = ({ route }) => {
                         style={[styles.closeButton, { backgroundColor: theme.tabBarActiveTint }]}
                         onPress={() => {
                             setErrorModalVisible(false);
-                            navigation.navigate('Overview'); 
+                            navigation.navigate('Overview');
                         }}
                     >
                         <Text style={{ color: theme.text }}>Close</Text>
@@ -122,7 +121,7 @@ const ChartPage = ({ route }) => {
                                 labelColor: (_opacity = 1) => theme.text,
                                 style: {
                                     borderRadius: 16,
-                                    paddingRight: 30, 
+                                    paddingRight: 30,
                                 },
                                 propsForDots: {
                                     r: "0",
@@ -133,7 +132,7 @@ const ChartPage = ({ route }) => {
                                     fontSize: 12,
                                     fontWeight: 'bold',
                                 },
-                                }}
+                            }}
                             bezier
                             style={{
                                 marginVertical: 8,
@@ -142,12 +141,15 @@ const ChartPage = ({ route }) => {
                             withHorizontalLabels={true}
                             withVerticalLabels={false}
                             fromZero={false}
-                            yAxisInterval={2} 
+                            yAxisInterval={2}
                         />
                         <View style={styles.lowHighContainer}>
                             <Text style={[styles.lowHighText, { color: theme.text }]}>{t('low')}: {lowHigh.low}</Text>
                             <Text style={[styles.lowHighText, { color: theme.text }]}>{t('high')}: {lowHigh.high}</Text>
                         </View>
+                        <Text style={[styles.activeTimeRange, { color: theme.text }]}>
+                            {timeRange === 1 ? t('last24hfilter') : t('last7dfilter')}
+                        </Text>
                     </>
                 ) : (
                     <Text style={{ color: theme.text }}>{t('noChartData')}</Text>
@@ -190,6 +192,11 @@ const styles = StyleSheet.create({
     lowHighText: {
         fontSize: 16,
     },
+    activeTimeRange: {
+        textAlign: 'center',
+        fontSize: 16,
+        marginVertical: 10,
+    }
 });
 
 export default ChartPage;

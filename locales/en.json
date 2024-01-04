@@ -34,7 +34,9 @@
   "last24h": "Last 24h",
   "last7d": "Last 7d",
   "high": "High",
-  "low": "Low"
+  "low": "Low",
+  "last24hfilter": "Filter: Last 24 hours",
+  "last7dfilter": "Filter: Last 7 days"
 }
 
 

@@ -34,7 +34,9 @@
   "last7d": "Laatste 7 dagen", 
   "last24h": "Laatste 24 uur",
   "high": "Hoog",
-  "low": "Laag"
+  "low": "Laag",
+  "last24hfilter": "Filter: laatste 24 uur",
+  "last7dfilter": "Filter: laatste 7 dagen"
 }
 
 
