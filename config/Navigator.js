@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,6 +9,8 @@ import OverviewPage from '../screens/Overview';
 import FavoritesPage from '../screens/Favorites';
 import SettingsPage from '../screens/Settings';
 import DetailsPage from '../screens/Details';
+
+import { ThemeContext } from '../config/themeContext';
 
 // Create Stack Navigator for each tab
 const Stack = createStackNavigator();
@@ -71,10 +73,24 @@ function TabNavigator() {
   );
 }
 
-const AppNavigator = () => (
-  <NavigationContainer>
-    <TabNavigator />
-  </NavigationContainer>
-);
+const AppNavigator = () => {
+  const { theme } = useContext(ThemeContext); // Access the theme from the context
+
+  return (
+    <NavigationContainer theme={{
+      dark: theme.background === '#333333',
+      colors: {
+        primary: theme.tabBarActiveTint,
+        background: theme.background,
+        card: theme.background,
+        text: theme.text,
+        border: theme.background,
+        notification: theme.tabBarActiveTint,
+      },
+    }}>
+      <TabNavigator />
+    </NavigationContainer>
+  );
+};
 
 export default AppNavigator;
