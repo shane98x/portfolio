@@ -29,7 +29,10 @@
   "noInfo" : "No info",
   "chart": "Chart",
   "viewChart": "View Chart",
-  "priceEvolution": "Price evolution"
+  "priceEvolution": "Price evolution",
+  "noChartData": "No chart data",
+  "last24h": "Last 24h",
+  "last7d": "Last 7d"
 }
 
 

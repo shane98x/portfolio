@@ -29,7 +29,10 @@
   "noInfo" : "Geen info",
   "chart": "Grafiek",
   "viewChart": "Zie grafiek",
-  "priceEvolution": "Prijs evolutie"
+  "priceEvolution": "Prijs evolutie",
+  "noChartData": "Geen grafiekdata",
+  "last7Days": "Laatste 7 dagen", 
+  "last24h": "Laatste 24 uur"
 }
 
 

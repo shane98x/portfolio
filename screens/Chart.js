@@ -13,6 +13,10 @@ import { LineChart } from 'react-native-chart-kit';
 import moment from 'moment';
 import { ThemeContext } from '../config/themeContext';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+
+// TO DO: bug where certain labels aren't visible completely
+// Example: bitcoin graph 
 
 const ChartPage = ({ route }) => {
     const { id } = route.params;
@@ -23,6 +27,7 @@ const ChartPage = ({ route }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const { theme } = useContext(ThemeContext);
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     const calculateUnixTime = (daysBack) => {
         let pastDate = new Date();
@@ -36,7 +41,7 @@ const ChartPage = ({ route }) => {
         const fromUnix = calculateUnixTime(daysBack);
 
         try {
-            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
+            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chdart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
             const data = await response.json();
             if (response.ok && data.prices && data.prices.length > 0) {
                 setChartData({
@@ -62,7 +67,7 @@ const ChartPage = ({ route }) => {
         fetchChartData(timeRange);
     }, [id, timeRange]);
 
-    const screenWidth = Dimensions.get("window").width;
+    const screenWidth = Dimensions.get("window").width - 10;
 
     return (
         <View style={{ backgroundColor: theme.background, flex: 1 }}>
@@ -76,20 +81,23 @@ const ChartPage = ({ route }) => {
                     <Text style={{ color: theme.text }}>{errorMessage}</Text>
                     <TouchableOpacity
                         style={[styles.closeButton, { backgroundColor: theme.tabBarActiveTint }]}
-                        onPress={() => setErrorModalVisible(false)}
+                        onPress={() => {
+                            setErrorModalVisible(false);
+                            navigation.navigate('Overview'); 
+                        }}
                     >
                         <Text style={{ color: theme.text }}>Close</Text>
                     </TouchableOpacity>
                 </View>
             </Modal>
             <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-                <Text style={[styles.titleStyle, { color: theme.text }]}>Price Evolution</Text>
+            <Text style={[styles.titleStyle, { color: theme.text }]}>{t('priceEvolution')}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', margin: 10 }}>
                     <TouchableOpacity onPress={() => setTimeRange(1)} style={[styles.timeRangeButton, { backgroundColor: theme.tabBarActiveTint }]}>
-                        <Text style={{ color: theme.text }}>Last 24 hours</Text>
+                        <Text style={{ color: theme.text }}>{t('last24h')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setTimeRange(7)} style={[styles.timeRangeButton, { backgroundColor: theme.tabBarActiveTint }]}>
-                        <Text style={{ color: theme.text }}>Last 7 days</Text>
+                        <Text style={{ color: theme.text }}>{t('last7d')}</Text>
                     </TouchableOpacity>
                 </View>
                 {isLoading ? (
@@ -97,17 +105,18 @@ const ChartPage = ({ route }) => {
                 ) : chartData ? (
                     <LineChart
                         data={chartData}
-                        width={screenWidth}
+                        width={screenWidth * 2}
                         height={220}
                         chartConfig={{
                             backgroundColor: theme.background,
                             backgroundGradientFrom: theme.background,
                             backgroundGradientTo: theme.background,
                             decimalPlaces: 2,
-                            color: (opacity = 1) => theme.tabBarActiveTint,
-                            labelColor: (opacity = 1) => theme.text,
+                            color: (_opacity = 1) => theme.tabBarActiveTint,
+                            labelColor: (_opacity = 1) => theme.text,
                             style: {
                                 borderRadius: 16,
+                                paddingRight: 30, 
                             },
                             propsForDots: {
                                 r: "0",
@@ -118,7 +127,7 @@ const ChartPage = ({ route }) => {
                                 fontSize: 12,
                                 fontWeight: 'bold',
                             },
-                        }}
+                            }}
                         bezier
                         style={{
                             marginVertical: 8,
@@ -127,6 +136,7 @@ const ChartPage = ({ route }) => {
                         withHorizontalLabels={true}
                         withVerticalLabels={false}
                         fromZero={false}
+                        yAxisInterval={2} 
                     />
                 ) : (
                     <Text style={{ color: theme.text }}>{t('noChartData')}</Text>
