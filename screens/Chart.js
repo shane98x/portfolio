@@ -15,14 +15,12 @@ import { ThemeContext } from '../config/themeContext';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-// TO DO: bug where certain labels aren't visible completely
-// Example: bitcoin graph 
-
 const ChartPage = ({ route }) => {
     const { id } = route.params;
     const [chartData, setChartData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [timeRange, setTimeRange] = useState(1);
+    const [lowHigh, setLowHigh] = useState({ low: 0, high: 0 }); // state to store low and high prices
     const [errorModalVisible, setErrorModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const { theme } = useContext(ThemeContext);
@@ -44,13 +42,20 @@ const ChartPage = ({ route }) => {
             const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
             const data = await response.json();
             if (response.ok && data.prices && data.prices.length > 0) {
+                const prices = data.prices.map(price => price[1]);
                 setChartData({
                     labels: data.prices.map((price) => moment(price[0]).format('LT')),
                     datasets: [{
-                        data: data.prices.map((price) => price[1]),
+                        data: prices,
                         strokeWidth: 2,
                         color: (_opacity = 1) => theme.tabBarActiveTint,
                     }],
+                });
+
+                // Calculate and Set Low and High Prices
+                setLowHigh({
+                    low: Math.min(...prices),
+                    high: Math.max(...prices),
                 });
             } else {
                 throw new Error(t('apiOffline'));
@@ -91,7 +96,7 @@ const ChartPage = ({ route }) => {
                 </View>
             </Modal>
             <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-            <Text style={[styles.titleStyle, { color: theme.text }]}>{t('priceEvolution')}</Text>
+                <Text style={[styles.titleStyle, { color: theme.text }]}>{t('priceEvolution')}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', margin: 10 }}>
                     <TouchableOpacity onPress={() => setTimeRange(1)} style={[styles.timeRangeButton, { backgroundColor: theme.tabBarActiveTint }]}>
                         <Text style={{ color: theme.text }}>{t('last24h')}</Text>
@@ -103,41 +108,47 @@ const ChartPage = ({ route }) => {
                 {isLoading ? (
                     <ActivityIndicator size="large" color={theme.activityIndicator} />
                 ) : chartData ? (
-                    <LineChart
-                        data={chartData}
-                        width={screenWidth * 2}
-                        height={220}
-                        chartConfig={{
-                            backgroundColor: theme.background,
-                            backgroundGradientFrom: theme.background,
-                            backgroundGradientTo: theme.background,
-                            decimalPlaces: 2,
-                            color: (_opacity = 1) => theme.tabBarActiveTint,
-                            labelColor: (_opacity = 1) => theme.text,
-                            style: {
+                    <>
+                        <LineChart
+                            data={chartData}
+                            width={screenWidth}
+                            height={220}
+                            chartConfig={{
+                                backgroundColor: theme.background,
+                                backgroundGradientFrom: theme.background,
+                                backgroundGradientTo: theme.background,
+                                decimalPlaces: 2,
+                                color: (_opacity = 1) => theme.tabBarActiveTint,
+                                labelColor: (_opacity = 1) => theme.text,
+                                style: {
+                                    borderRadius: 16,
+                                    paddingRight: 30, 
+                                },
+                                propsForDots: {
+                                    r: "0",
+                                    strokeWidth: "2",
+                                    stroke: theme.tabBarActiveTint,
+                                },
+                                propsForLabels: {
+                                    fontSize: 12,
+                                    fontWeight: 'bold',
+                                },
+                                }}
+                            bezier
+                            style={{
+                                marginVertical: 8,
                                 borderRadius: 16,
-                                paddingRight: 30, 
-                            },
-                            propsForDots: {
-                                r: "0",
-                                strokeWidth: "2",
-                                stroke: theme.tabBarActiveTint,
-                            },
-                            propsForLabels: {
-                                fontSize: 12,
-                                fontWeight: 'bold',
-                            },
                             }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
-                            borderRadius: 16,
-                        }}
-                        withHorizontalLabels={true}
-                        withVerticalLabels={false}
-                        fromZero={false}
-                        yAxisInterval={2} 
-                    />
+                            withHorizontalLabels={true}
+                            withVerticalLabels={false}
+                            fromZero={false}
+                            yAxisInterval={2} 
+                        />
+                        <View style={styles.lowHighContainer}>
+                            <Text style={[styles.lowHighText, { color: theme.text }]}>{t('low')}: {lowHigh.low}</Text>
+                            <Text style={[styles.lowHighText, { color: theme.text }]}>{t('high')}: {lowHigh.high}</Text>
+                        </View>
+                    </>
                 ) : (
                     <Text style={{ color: theme.text }}>{t('noChartData')}</Text>
                 )}
@@ -168,7 +179,17 @@ const styles = StyleSheet.create({
         marginTop: 20,
         padding: 10,
         borderRadius: 5,
-    }
+    },
+    lowHighContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        paddingHorizontal: 20,
+        marginTop: 10,
+    },
+    lowHighText: {
+        fontSize: 16,
+    },
 });
 
 export default ChartPage;
