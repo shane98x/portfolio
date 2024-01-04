@@ -15,5 +15,8 @@
   "changeFromATH": "% verandering van Recordhoogte",
   "allTimeLow": "Recordlaagte (EUR)",
   "changeFromATL": "% verandering van Recordlaagte",
-  "addToFavorites": "Toevoegen aan favorieten"
+  "addToFavorites": "Toevoegen aan favorieten",
+  "removeFavorite": "Verwijder uit Favorieten",
+  "favoriteListTitle": "Uw Favoriete Tokens"
 }
+

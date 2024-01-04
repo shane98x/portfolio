@@ -1,14 +1,15 @@
-// FavoriteList.js
 import React, { useContext } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ThemeContext } from '../config/themeContext'; // Import ThemeContext
+import { ThemeContext } from '../config/themeContext'; 
+import { useTranslation } from 'react-i18next'; 
 
 const FavoriteList = ({ favorites, onFavoriteRemoved, navigation }) => {
-    const { theme } = useContext(ThemeContext); // Access the theme from the context
+    const { theme } = useContext(ThemeContext);
+    const { t } = useTranslation(); // Initialize translation function
 
     const handleNavigateToDetails = (item) => {
-        navigation.navigate('Details', { id: item.id }); // Navigate to the Details screen with token id
+        navigation.navigate('Details', { id: item.id });
     };
 
     const handleRemoveFavorite = async (item) => {
@@ -27,11 +28,13 @@ const FavoriteList = ({ favorites, onFavoriteRemoved, navigation }) => {
     );    
 
     return (
-        <FlatList
-            data={favorites}
-            keyExtractor={(item, index) => item && item.id ? item.id.toString() : index.toString()}
-            renderItem={renderFavoriteItem}
-        />
+        <View>
+            <FlatList
+                data={favorites}
+                keyExtractor={(item, index) => item && item.id ? item.id.toString() : index.toString()}
+                renderItem={renderFavoriteItem}
+            />
+        </View>
     );
 };
 
@@ -42,7 +45,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderBottomWidth: 1,
-        // Removed color here as it's added dynamically
     },
     tokenInfo: {
         flex: 1, 
@@ -50,13 +52,17 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 18,
-        // Removed color here as it's added dynamically
     },
     icon: {
         width: 44, 
         height: 44,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        padding: 20,
     },
 });
 

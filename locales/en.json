@@ -15,5 +15,8 @@
   "changeFromATH": "% change from ATH",
   "allTimeLow": "All-Time Low (EUR)",
   "changeFromATL": "% change from ATL",
-  "addToFavorites": "Add to Favorites"
+  "addToFavorites": "Add to Favorites",
+  "removeFavorite": "Remove from Favorites",
+  "favoriteListTitle": "Your Favorite Tokens"
 }
+
