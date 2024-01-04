@@ -22,7 +22,11 @@
   "themeSetting": "Theme",
   "languageSetting": "Language",
   "userProfilesComingSoon": "User profiles coming soon...",
-  "anonymous": "Anonymous"
+  "anonymous": "Anonymous",
+  "addedToFavorites": "Added to Favorites",
+  "alreadyInFavorites": "Already in Favorites",
+  "removedFromFavorites": "Removed from Favorites"
 }
+
 
 

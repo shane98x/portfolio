@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native'; 
+import i18n from '../config/i18n'; 
 
 const FavoritesContext = createContext();
 
@@ -21,23 +22,22 @@ export const FavoritesProvider = ({ children }) => {
     };
 
     const addFavorite = async (token) => {
-        // Check if the token already exists in favorites
         const isAlreadyFavorite = favorites.some(favorite => favorite.id === token.id);
         if (!isAlreadyFavorite) {
             const newFavorites = [...favorites, token];
             setFavorites(newFavorites);
             await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));
-            Alert.alert("Added to Favorites"); // Alert user of success
+            Alert.alert(i18n.t('addedToFavorites')); 
         } else {
-            Alert.alert("Already in Favorites"); // Alert user that it's already a favorite
+            Alert.alert(i18n.t('alreadyInFavorites')); 
         }
     };
 
     const removeFavorite = async (token) => {
         const updatedFavorites = favorites.filter(favorite => favorite.id !== token.id);
-        setFavorites(updatedFavorites); // Update local state
+        setFavorites(updatedFavorites);
         await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-        Alert.alert('Removed from Favorites'); // Optionally, alert user of removal
+        Alert.alert(i18n.t('removedFromFavorites')); 
     };
 
     return (

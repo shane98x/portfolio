@@ -22,7 +22,11 @@
   "themeSetting": "Thema",
   "languageSetting": "Taal",
   "userProfilesComingSoon": "Gebruikersprofielen komen binnenkort...",
-  "anonymous": "Anoniem"
+  "anonymous": "Anoniem",
+  "addedToFavorites": "Toegevoegd aan Favorieten",
+  "alreadyInFavorites": "Al in Favorieten",
+  "removedFromFavorites": "Verwijderd uit Favorieten"
 }
+
 
 

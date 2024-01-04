@@ -5,14 +5,14 @@ import en from '../locales/en.json';
 import nl from '../locales/nl.json';
 
 i18n
-  .use(initReactI18next) // Passes i18n down to react-i18next
+  .use(initReactI18next) 
   .init({
-    compatibilityJSON: 'v3',
+    compatibilityJSON: 'v3', // if not mentioned, Intl. Api environment not supported on Expo
     resources: {
       en: { translation: en },
       nl: { translation: nl },
     },
-    lng: "en", // If you want to use language detector, you can remove this line
+    lng: "en", 
     fallbackLng: "en",
     interpolation: { escapeValue: false },
   });
