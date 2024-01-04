@@ -2,10 +2,12 @@ import React, { useContext, useState } from 'react';
 import { View, Text, Switch, Image, StyleSheet } from 'react-native';
 import { ThemeContext } from '../config/themeContext'; 
 import i18n from '../config/i18n';
+import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 const SettingsPage = () => {
   const { theme, toggleTheme, isDark } = useContext(ThemeContext); 
   const [language, setLanguage] = useState(i18n.language);
+  const { t } = useTranslation(); // Initialize translation function
 
   // Define consistent styling for switches
   const trackColors = { false: "#767577", true: theme.tabBarActiveTint };
@@ -22,17 +24,17 @@ const SettingsPage = () => {
       {/* Profile Section */}
       <View style={styles.profileSection}>
         <Image source={require('../assets/vives.png')} style={styles.profileImage} />
-        <Text style={[styles.username, { color: theme.text }]}>Anonymous</Text>
-        <Text style={[styles.userStatus, { color: theme.text }]}>User profiles coming soon...</Text>
+        <Text style={[styles.username, { color: theme.text }]}>{t('anonymous')}</Text>
+        <Text style={[styles.userStatus, { color: theme.text }]}>{t('userProfilesComingSoon')}</Text>
       </View>
 
       {/* App Settings Section */}
       <View style={styles.settingsSection}>
-        <Text style={[styles.sectionTitle, { color: theme.text }]}>Device</Text>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('deviceSettings')}</Text>
 
         {/* Theme Toggle */}
         <View style={[styles.toggleRow, { borderBottomColor: theme.itemBorder }]}>
-          <Text style={{ color: theme.text }}>{`Theme ( ${isDark ? 'Dark' : 'Light'} )`}</Text> 
+          <Text style={{ color: theme.text }}>{`${t('themeSetting')} (${isDark ? t('dark') : t('light')})`}</Text> 
           <Switch
             trackColor={trackColors}
             thumbColor={thumbColor}
@@ -43,10 +45,10 @@ const SettingsPage = () => {
 
         {/* Language Toggle */}
         <View style={[styles.toggleRow, { borderBottomColor: theme.itemBorder }]}>
-          <Text style={{ color: theme.text }}>{`Language ( ${language === 'en' ? 'EN' : 'NL'} )`}</Text> 
+          <Text style={{ color: theme.text }}>{`${t('languageSetting')} (${language === 'en' ? 'EN' : 'NL'})`}</Text> 
           <Switch
             trackColor={trackColors}
-            thumbColor={thumbColor} // Consistent thumb color with the theme toggle
+            thumbColor={thumbColor}
             onValueChange={toggleLanguage}
             value={language === 'nl'}
           />
@@ -56,6 +58,7 @@ const SettingsPage = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

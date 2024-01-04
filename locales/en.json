@@ -17,6 +17,12 @@
   "changeFromATL": "% change from ATL",
   "addToFavorites": "Add to Favorites",
   "removeFavorite": "Remove from Favorites",
-  "favoriteListTitle": "Your Favorite Tokens"
+  "favoriteListTitle": "Your Favorite Tokens",
+  "deviceSettings": "Device",
+  "themeSetting": "Theme",
+  "languageSetting": "Language",
+  "userProfilesComingSoon": "User profiles coming soon...",
+  "anonymous": "Anonymous"
 }
+
 

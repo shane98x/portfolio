@@ -17,6 +17,12 @@
   "changeFromATL": "% verandering van Recordlaagte",
   "addToFavorites": "Toevoegen aan favorieten",
   "removeFavorite": "Verwijder uit Favorieten",
-  "favoriteListTitle": "Uw Favoriete Tokens"
+  "favoriteListTitle": "Uw Favoriete Tokens",
+  "deviceSettings": "Apparaat",
+  "themeSetting": "Thema",
+  "languageSetting": "Taal",
+  "userProfilesComingSoon": "Gebruikersprofielen komen binnenkort...",
+  "anonymous": "Anoniem"
 }
+
 
