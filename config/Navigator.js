@@ -19,27 +19,33 @@ import { useTranslation } from 'react-i18next';
 const Stack = createStackNavigator();
 
 function OverviewStackScreen() {
+  const { t } = useTranslation();  
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Overview" component={OverviewPage} />
-      <Stack.Screen name="Details" component={DetailsPage} />
+      <Stack.Screen name="Overview" component={OverviewPage} options={{ title: t('overview') }} />
+      <Stack.Screen name="Details" component={DetailsPage} options={{ title: t('details') }} />
     </Stack.Navigator>
   );
 }
 
 function SettingsStackScreen() {
+  const { t } = useTranslation();  
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Settings" component={SettingsPage} />
+      <Stack.Screen name="Settings" component={SettingsPage} options={{ title: t('settings') }} />
     </Stack.Navigator>
   );
 }
 
 function FavouritesStackScreen() {
+  const { t } = useTranslation();  
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="Favourites" component={FavoritesPage} />
-      <Stack.Screen name="Details" component={DetailsPage} />
+      <Stack.Screen name="Favourites" component={FavoritesPage} options={{ title: t('favorites') }} />
+      <Stack.Screen name="Details" component={DetailsPage} options={{ title: t('details') }} />
     </Stack.Navigator>
   );
 }
