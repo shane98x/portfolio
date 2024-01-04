@@ -1,24 +1,24 @@
 import React, { useContext } from 'react';
-import { View, Text, Switch, Image } from 'react-native';
-import { ThemeContext } from '../config/themeContext'; // Import ThemeContext
+import { View, Text, Switch, Image, StyleSheet } from 'react-native';
+import { ThemeContext } from '../config/themeContext'; 
 
 const SettingsPage = () => {
-  const { theme, toggleTheme, isDark } = useContext(ThemeContext); // Access theme, toggleTheme, and isDark
+  const { theme, toggleTheme, isDark } = useContext(ThemeContext); 
 
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: theme.background }}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* Profile Section */}
-      <View style={{ alignItems: 'center', marginTop: 50 }}>
-        <Image source={require('../assets/vives.png')} style={{ width: 100, height: 100, borderRadius: 50 }} />
-        <Text style={{ color: theme.text, fontSize: 22, marginTop: 10 }}>Anonymous</Text>
-        <Text style={{ color: theme.text, fontStyle: 'italic' }}>User profiles coming soon...</Text>
+      <View style={styles.profileSection}>
+        <Image source={require('../assets/vives.png')} style={styles.profileImage} />
+        <Text style={[styles.username, { color: theme.text }]}>Anonymous</Text>
+        <Text style={[styles.userStatus, { color: theme.text }]}>User profiles coming soon...</Text>
       </View>
 
       {/* App Settings Section */}
-      <View style={{ marginTop: 50, width: '100%', paddingHorizontal: 20 }}>
-        <Text style={{ color: theme.text, fontSize: 18, marginBottom: 10 }}>App Settings</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, borderBottomColor: theme.border, borderBottomWidth: 1 }}>
-          <Text style={{ color: theme.text }}>Theme (Dark / Light)</Text>
+      <View style={styles.settingsSection}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Device</Text>
+        <View style={[styles.themeToggleRow, { borderBottomColor: theme.itemBorder }]}>
+          <Text style={{ color: theme.text }}>{`Theme ( ${isDark ? 'Dark' : 'Light'} )`}</Text> 
           {/* Toggle Switch */}
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -31,5 +31,45 @@ const SettingsPage = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  profileSection: {
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  username: {
+    fontSize: 22,
+    marginTop: 10,
+  },
+  userStatus: {
+    fontStyle: 'italic',
+  },
+  settingsSection: {
+    marginTop: 50,
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  themeToggleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+  },
+});
 
 export default SettingsPage;
