@@ -3,6 +3,7 @@ import { View, Text, Switch, Image, StyleSheet } from 'react-native';
 import { ThemeContext } from '../config/themeContext'; 
 import i18n from '../config/i18n';
 import { useTranslation } from 'react-i18next'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingsPage = () => {
   const { theme, toggleTheme, isDark } = useContext(ThemeContext); 
@@ -13,8 +14,9 @@ const SettingsPage = () => {
   const trackColors = { false: "#767577", true: theme.tabBarActiveTint };
   const thumbColor = isDark ? "#f5dd4b" : "#f4f3f4";
 
-  const toggleLanguage = () => {
+  const toggleLanguage = async () => {
     let newLanguage = language === 'en' ? 'nl' : 'en';
+    await AsyncStorage.setItem('language', newLanguage);
     i18n.changeLanguage(newLanguage);
     setLanguage(newLanguage);
   };
