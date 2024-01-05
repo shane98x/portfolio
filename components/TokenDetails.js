@@ -55,18 +55,14 @@ const TokenDetails = ({ id }) => {
             <Modal
                 visible={errorModalVisible}
                 transparent={true}
-                animationType="slide"
-                onRequestClose={() => {
-                    setErrorModalVisible(false);
-                    navigation.navigate('Overview'); 
-                }}
+                animationType="slide"            
             >
                 <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>
                     <Text style={{ color: theme.text }}>{errorMessage}</Text>
                     <TouchableOpacity
                         onPress={() => {
                             setErrorModalVisible(false);
-                            navigation.navigate('Favourites'); 
+                            navigation.navigate('Overview'); 
                         }}
                         style={[styles.favoritesButton, { backgroundColor: theme.tabBarActiveTint }]} // Use the favoritesButton styling
                     >
