@@ -58,7 +58,7 @@ const TokenDetails = ({ id }) => {
                 animationType="slide"
                 onRequestClose={() => {
                     setErrorModalVisible(false);
-                    navigation.navigate('Favourites'); 
+                    navigation.navigate('Overview'); 
                 }}
             >
                 <View style={[styles.modalContainer, { backgroundColor: theme.modalBackground }]}>

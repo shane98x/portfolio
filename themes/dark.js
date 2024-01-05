@@ -8,5 +8,6 @@ export const darkTheme = {
   itemBorder: '#555',
   modalBackground: '#444',
   activityIndicator: "#4FD3C4",
-  buttonText: '#FFFFFF'
+  buttonText: '#FFFFFF',
+  lineBackground: '#FFFFFF'
 };

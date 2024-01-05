@@ -9,4 +9,5 @@ export const lightTheme = {
   modalBackground: '#FFF8F8',
   activityIndicator: '#F54B64', 
   iconColor: '#F54B64', 
+  lineBackground: '#B80000',
 };

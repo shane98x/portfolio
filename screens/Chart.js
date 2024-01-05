@@ -39,7 +39,7 @@ const ChartPage = ({ route }) => {
         const fromUnix = calculateUnixTime(daysBack);
 
         try {
-            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=5`);
+            const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart/range?vs_currency=eur&from=${fromUnix}&to=${toUnix}&precision=2`);
             const data = await response.json();
             if (response.ok && data.prices && data.prices.length > 0) {
                 const prices = data.prices.map(price => price[1]);
@@ -47,8 +47,7 @@ const ChartPage = ({ route }) => {
                     labels: data.prices.map((price) => moment(price[0]).format('LT')),
                     datasets: [{
                         data: prices,
-                        strokeWidth: 2,
-                        color: (_opacity = 1) => theme.tabBarActiveTint,
+                        
                     }],
                 });
 
@@ -73,6 +72,16 @@ const ChartPage = ({ route }) => {
 
     const screenWidth = Dimensions.get("window").width - 10;
 
+    const getLineColor = (theme, opacity = 1) => {
+        const hex = theme.lineBackground;
+        const rgb = parseInt(hex.substring(1), 16);
+        const red = (rgb >> 16) & 255;
+        const green = (rgb >> 8) & 255;
+        const blue = rgb & 255;
+      
+        return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+      };
+
     return (
         <View style={{ backgroundColor: theme.background, flex: 1 }}>
             <Modal
@@ -87,7 +96,7 @@ const ChartPage = ({ route }) => {
                         style={[styles.closeButton, { backgroundColor: theme.tabBarActiveTint }]}
                         onPress={() => {
                             setErrorModalVisible(false);
-                            navigation.navigate('Overview');
+                            navigation.navigate('Details', { id: id });
                         }}
                     >
                         <Text style={{ color: theme.text }}>Close</Text>
@@ -117,21 +126,23 @@ const ChartPage = ({ route }) => {
                                 backgroundGradientFrom: theme.background,
                                 backgroundGradientTo: theme.background,
                                 decimalPlaces: 2,
-                                color: (_opacity = 1) => theme.tabBarActiveTint,
+                                strokeWidth: 3,
+                                color: (opacity = 1) => getLineColor(theme, opacity),
                                 labelColor: (_opacity = 1) => theme.text,
                                 style: {
                                     borderRadius: 16,
                                     paddingRight: 30,
                                 },
-                                propsForDots: {
-                                    r: "0",
-                                    strokeWidth: "2",
-                                    stroke: theme.tabBarActiveTint,
-                                },
                                 propsForLabels: {
                                     fontSize: 12,
                                     fontWeight: 'bold',
                                 },
+                                propsForBackgroundLines: {
+                                    stroke: "none" 
+                                },
+                                propsForDots: {
+                                    r: "0"
+                                }
                             }}
                             bezier
                             style={{
